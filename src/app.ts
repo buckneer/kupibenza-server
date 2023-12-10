@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 1337;
 
 app.use(cors({
-	origin: 'http://localhost:3000',
+	origin: process.env.ORIGIN,
 	credentials: true // Enable sending credentials (like cookies) with the request
   }));
 app.use(express.json())
