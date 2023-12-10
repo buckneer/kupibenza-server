@@ -10,12 +10,12 @@ import routes from "./routes";
 const app = express();
 
 const PORT = process.env.PORT || 1337;
-
-app.use(cors({
-	origin: ['http://localhost:3000', 'https://kupibenza.web.app/login'],
-	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	credentials: true // Enable sending credentials (like cookies) with the request
-  }));
+// {
+// 	origin: ['http://localhost:3000', 'https://kupibenza.web.app/login'],
+// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	credentials: true // Enable sending credentials (like cookies) with the request
+//   }
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(requestLogger);
