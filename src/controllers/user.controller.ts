@@ -17,7 +17,7 @@ export async function handleRegisterUser(req: Request, res: Response) {
 		return res.send(JSON.stringify({"message": "Registered"}));
 	} catch (e: any) {
 		log.error(e.message);
-		return res.status(409).send(e.message)
+		return handleCustomError(e, res);
 	}
 }
 
@@ -33,7 +33,7 @@ export async function handleLogin(req: Request, res: Response) {
 		}
 		return res.status(401).send("User agent is required");
 	} catch (e: any) {
-		return handleCustomError(e, res);
+		
 	}
 }
 

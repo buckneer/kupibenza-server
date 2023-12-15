@@ -65,3 +65,13 @@ export const handleSell =async (req:Request, res: Response) => {
         return res.status(409).send(e.message);
     }
 }
+
+
+export const handleGetById = async (req: Request, res: Response) => {
+    try {
+
+    } catch (e: any) {
+        log.error(e.message);
+        
+    }
+}

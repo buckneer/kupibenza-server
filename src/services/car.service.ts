@@ -4,7 +4,8 @@ import Car, { CarDocument, CarProps } from "../models/car.model";
 
 export const getAllCars = async () => {
     try {
-        let cars = await Car.find({sold: false}) as CarDocument[];
+        let cars = await Car.find({sold: false}).sort({ createdAt: 1 }) // Sort by createdAt field in descending order (-1 for descending)
+        .exec() as CarDocument[];
         return cars;
     } catch(e: any) {
         return new Error(e);
@@ -64,6 +65,16 @@ export const filterCars = async (filters: Partial<CarDocument>) => {
     }
 }
 
+export const getById = async (carId: String) => {
+    try {
+        let carObj = await Car.findById(carId) as CarDocument;
+        
+        return carObj;
+    } catch(e: any) {
+        throw new Error(e);
+    }
+}
+
 export const setSold = async (carId: String) => {
     try {
         let carObj = await Car.findById(carId) as CarDocument;
@@ -72,7 +83,7 @@ export const setSold = async (carId: String) => {
 
         return saved;
     } catch(e: any) {
-        return new Error(e);
+        throw new Error(e);
     }
 }
 
