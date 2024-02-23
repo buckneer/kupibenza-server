@@ -63,6 +63,7 @@ export async function handleLogout(req: Request, res: Response) {
 
 		if(userAgent) {
 			let logoutResp = await logout(username, userAgent);
+			
 			if (logoutResp) {
 				return res.sendStatus(202);
 			} else {

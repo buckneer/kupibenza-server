@@ -37,7 +37,7 @@ export async function loginWithUsername(username: string, password: string, user
 		if (user) {
 			let matchingPass = await bcrypt.compare(password, user.password);
 			if (matchingPass) {
-				const accessToken = jwt.sign({username: user.username, role: user.role}, process.env.JWT_SECRET as string, {expiresIn: "20m"});
+				const accessToken = jwt.sign({username: user.username, role: user.role}, process.env.JWT_SECRET as string, {expiresIn: "10s"});
 				const refreshToken = jwt.sign({username: user.username, role: user.role},
 					process.env.REFRESH_SECRET as string);
 
@@ -89,7 +89,7 @@ export async function refreshAccessToken(refreshToken: string, userAgent: string
 				//@ts-ignore
 				let user = await User.findOne({username: decoded.username});
 				if (user) {
-					const accessToken = jwt.sign({username: user.username, role: user.role}, process.env.JWT_SECRET as string, {expiresIn: "20m"});
+					const accessToken = jwt.sign({username: user.username, role: user.role}, process.env.JWT_SECRET as string, {expiresIn: "30m"});
 					return {"access_token": accessToken};
 				} else {
 					throw new CustomError("ValidationError", "User Already Exists");
@@ -118,10 +118,12 @@ export async function logout(username: string, userAgent: string) {
 	try {
 		let user = await User.findOne({username});
 		if (user) {
-			let session = await Session.findOne({"userId": user._id, userAgent});
+			let session = await Session.findOne({"userId": user._id, userAgent, active: true});
 			if (session) {
 				session.active = false;
 				await session.save();
+				console.log(session);
+
 				return {"message": "Logged out successfully"};
 			} else {
 				throw new CustomError("ValidationError", "Session Expired");

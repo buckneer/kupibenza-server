@@ -31,6 +31,8 @@ export const handleAddCar = async (req: Request, res: Response) => {
             images: imagesData
         }
         
+        console.log(carDoc);
+
         let resp = await addCar(carDoc);
         return res.send(JSON.stringify(resp));
     } catch(e: any) {
@@ -45,7 +47,7 @@ export const handleFilterCars = async (req: Request, res: Response) => {
         let filters = {
             ...req.body
         }
-
+        // log.info(filters);
         let cars = await filterCars(filters);
         return res.send(JSON.stringify(cars));
     } catch(e: any) {

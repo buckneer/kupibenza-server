@@ -58,6 +58,7 @@ export const filterCars = async (filters: Partial<CarDocument>) => {
         }
 
         const filteredCars = await Car.find(filterObject) as CarDocument[];
+        console.log(filterObject);
         return filteredCars;
         
     } catch(e: any) {
